@@ -45,10 +45,12 @@ const taskSlice = createSlice({
         state.loading = true
         state.error = null
       })
+      
       .addCase(fetchTasks.fulfilled, (state, action) => {
         state.loading = false
         state.tasks = action.payload
       })
+
       .addCase(fetchTasks.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload as string
