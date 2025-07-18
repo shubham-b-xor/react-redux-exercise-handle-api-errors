@@ -21,6 +21,8 @@ export const handlers = [
   }),
 
   http.post('/api/tasks', async ({ request }) => {
+    
+    isAuthenticated = false
     if (!isAuthenticated) {
       return new HttpResponse('Unauthorized', { status: 401 })
     }

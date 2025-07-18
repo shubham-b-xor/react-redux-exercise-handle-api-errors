@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../app/store'
+import { Box, TextField, Button, Typography, Alert, Stack, Paper } from '@mui/material'
+import { useAppDispatch } from '../app/hooks'
 import { loginSuccess } from '../features/auth/authSlice'
 import axios from '../api/axiosInstance'
 
 const LoginForm: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useAppDispatch()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -22,29 +22,52 @@ const LoginForm: React.FC = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      <div>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Login</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </form>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        backgroundColor: '#f5f5f5',
+        p: 2,
+      }}
+    >
+      <Paper elevation={3} sx={{ p: 4, width: 320 }}>
+        <form onSubmit={handleSubmit} noValidate>
+          <Stack spacing={3}>
+            <Typography variant="h5" align="center">
+              Login
+            </Typography>
+
+            <TextField
+              label="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              fullWidth
+              autoFocus
+              autoComplete="username"
+            />
+
+            <TextField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              fullWidth
+              autoComplete="current-password"
+            />
+
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Login
+            </Button>
+
+            {error && <Alert severity="error">{error}</Alert>}
+          </Stack>
+        </form>
+      </Paper>
+    </Box>
   )
 }
 
